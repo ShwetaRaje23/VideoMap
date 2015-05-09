@@ -1,0 +1,99 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="//assets.ziggeo.com/css/ziggeo-betajs-player.min.css" />
+<script src="//assets.ziggeo.com/js/ziggeo-jquery-json2-betajs-player.min.js"></script>
+<script>ZiggeoApi.token = "5a43b6ee0a96449c649af6a8030b0c9d";</script>
+</head>
+
+<body>
+
+<p> This worked as a application.. Record a video </p>
+
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script>
+(function() {
+
+    if(!!navigator.geolocation) {
+    
+        var map;
+    
+        var mapOptions = {
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        
+        map = new google.maps.Map(document.getElementById('google_canvas'), mapOptions);
+    
+        navigator.geolocation.getCurrentPosition(function(position) {
+        
+            var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            
+            var infowindow = new google.maps.InfoWindow({
+                map: map,
+                position: geolocate,
+                content:
+                    '<h1>Location pinned from HTML5 Geolocation!</h1>' +
+                    '<h2>Latitude: ' + position.coords.latitude + '</h2>' +
+                    '<h2>Longitude: ' + position.coords.longitude + '</h2>'
+            });
+            
+            map.setCenter(geolocate);
+            
+        });
+        
+    } else {
+        document.getElementById('google_canvas').innerHTML = 'No Geolocation Support.';
+    }
+    
+})();
+
+</script>
+
+<!-- <ziggeo ziggeo-width=320
+        ziggeo-height=240>
+</ziggeo>
+
+<script>
+ZiggeoApi.Events.on("submitted", function (data) {
+	// Triggered when a video has been recorded 
+	window.alert("Recorded Video")
+});
+</script>
+<script>
+var myCenter=new google.maps.LatLng(51.508742,-0.120850);
+
+function initialize()
+{
+var mapProp = {
+   center:myCenter,
+   zoom:5,
+   mapTypeId:google.maps.MapTypeId.ROADMAP
+   };
+
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+var marker=new google.maps.Marker({
+   position:myCenter,
+   });
+
+marker.setMap(map);
+
+var infowindow = new google.maps.InfoWindow({
+   content:"<iframe src='http:'></iframe>"
+   });
+
+infowindow.open(map,marker);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head> -->
+
+<!-- <body> -->
+<div id="googleMap" style="width:500px;height:380px;"></div>
+
+</body>
+
+
+</html>
