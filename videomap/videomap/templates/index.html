@@ -8,7 +8,10 @@
 		<link href="/static/css/main.css" rel="stylesheet">
 		<link href="/static/css/demo.css" rel="stylesheet">
 		<!-- database -->
-		<script src="path/to/rsvp.min.js"></script>
+		<!-- hello -->
+		 <!-- // <script src="./videomap/rsvp.js"></script> -->
+		 <script src="https://cdn.jsdelivr.net/rsvp/3.0.6/rsvp.amd.js"></script>
+		 <script src="https://cdn.jsdelivr.net/rsvp/3.0.6/rsvp.amd.min.js"></script>
 		  <!-- Firebase -->
 		  <script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
 		  <!-- GeoFire -->
@@ -38,6 +41,8 @@
 		<script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 	
 	    <script>
+	    var position, lat, longi;
+
 	    (function() {
 	    
 	    	if(!!navigator.geolocation) {
@@ -54,6 +59,8 @@
 	    		navigator.geolocation.getCurrentPosition(function(position) {
 	    		
 		    		var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		    		lat = position.coords.latitude;
+		    		longi = position.coords.longitude;
 		    		
 		    		var infowindow = new google.maps.InfoWindow({
 		    			map: map,
@@ -81,10 +88,11 @@
 	    </script>
 
 	    <script>
+	    var token;
 		ZiggeoApi.Events.on("submitted", function (data) {
 			// Triggered when a video has been recorded 
 		window.alert("Recorded Video")
-		var token = data.video.token;
+		 token = data.video.token;
 		console.log("token");
 		});
 		</script>
@@ -93,8 +101,9 @@
 		<script>
 				var myFirebaseRef = new Firebase("https://torrid-torch-9815.firebaseio.com/");
 				var geoFire = new GeoFire(myFirebaseRef);
+				
 
-				geoFire.set(token, [position.coords.latitude , position.coords.longitude]).then(function() {
+				geoFire.set(token, [lat ,longi]).then(function() {
 				  console.log("Provided key has been added to GeoFire");
 				}, function(error) {
 				  console.log("Error: " + error);
@@ -119,7 +128,7 @@
 			s.parentNode.insertBefore(g,s)})(document,'script');
 		</script>
 		
-		<!-- Demo Ads -->
-		<script src="//www.toddmotto.com/ads/ads.js"></script>
+		
+
 	</body>
 </html>
