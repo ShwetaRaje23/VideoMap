@@ -28,7 +28,7 @@
 	<!--  Add a logo and a title -->
 		<div class="header">
 			<div class="logo">
-				<!-- <img src="/static/img/logo.png" alt="Logo" class="logo-img"> -->
+				<img src="https://www.valveman.com/wp-content/uploads/2012/09/VM-logo-only.gif" width="60px" height="60px" alt="Logo" class="logo-img">
 			</div>
 			<ul class="nav">
 				<li class="nav-link">
@@ -74,7 +74,7 @@
 		    				'<ziggeo ziggeo-width=320 ziggeo-height=240></ziggeo>' +
 		    				'<iframe src="https://www.google.com/maps/d/u/0/embed?mid=zyEQga4ukwR4.kL8rDqwLtHjM" width="640" height="480"></iframe>'
 
-		    			
+
 
 		    				
 
@@ -84,6 +84,30 @@
 		    		map.setCenter(geolocate);
 		    		
 	    		});
+
+				google.maps.event.addListener(map, 'click', function(event) {
+			   var loc = placeMarker(event.latLng);
+				var infowindow = new google.maps.InfoWindow({
+		    			map: map,
+		    			position: loc,
+		    			content:
+		    				'<h1>Record a video at this location !</h1>' +
+		    				'<h2>Latitude: ' + position.coords.latitude + '</h2>' +
+		    				'<h2>Longitude: ' + position.coords.longitude + '</h2>'+ 
+		    				'<ziggeo ziggeo-width=320 ziggeo-height=240></ziggeo>' +
+		    				'<iframe src="https://www.google.com/maps/d/u/0/embed?mid=zyEQga4ukwR4.kL8rDqwLtHjM" width="640" height="480"></iframe>'
+
+
+			});
+			});
+
+			function placeMarker(location) {
+			    var marker = new google.maps.Marker({
+			        position: location, 
+			        map: map
+			    });
+			}
+
 	    		
 	    	} else {
 	    		document.getElementById('google_canvas').innerHTML = 'No Geolocation Support.';
