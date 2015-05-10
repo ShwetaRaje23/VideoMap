@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 	<head>
+
 		<meta charset="utf-8">
 		<title>VM - VideoMap : Using Ziggeo and Google Maps API to Create a video trail</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -10,8 +11,8 @@
 		<!-- database -->
 		<!-- hello -->
 		 <!-- // <script src="./videomap/rsvp.js"></script> -->
-		 <script src="https://cdn.jsdelivr.net/rsvp/3.0.6/rsvp.amd.js"></script>
-		 <script src="https://cdn.jsdelivr.net/rsvp/3.0.6/rsvp.amd.min.js"></script>
+		 <script src="http://rsvpjs-builds.s3.amazonaws.com/rsvp-latest.min.js"></script>
+		 <!-- // <script src="https://cdn.jsdelivr.net/rsvp/3.0.6/rsvp.amd.min.js"></script> -->
 		  <!-- Firebase -->
 		  <script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
 		  <!-- GeoFire -->
@@ -41,13 +42,14 @@
 		<script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 	
 	    <script>
-	    var position, lat, longi;
+	    var position, lat= 0, longi=0;
 
 	    (function() {
 	    
 	    	if(!!navigator.geolocation) {
 	    	
 	    		var map;
+	    		var key=0;
 	    	
 		    	var mapOptions = {
 		    		zoom: 15,
@@ -68,8 +70,13 @@
 		    			content:
 		    				'<h1>Record a video at this location !</h1>' +
 		    				'<h2>Latitude: ' + position.coords.latitude + '</h2>' +
-		    				'<h2>Longitude: ' + position.coords.longitude + '</h2>'+
-		    				'<ziggeo ziggeo-width=320 ziggeo-height=240></ziggeo>'
+		    				'<h2>Longitude: ' + position.coords.longitude + '</h2>'+ 
+		    				'<ziggeo ziggeo-width=320 ziggeo-height=240></ziggeo>' +
+		    				'<iframe src="https://www.google.com/maps/d/u/0/embed?mid=zyEQga4ukwR4.kL8rDqwLtHjM" width="640" height="480"></iframe>'
+
+		    			
+
+		    				
 
 		    				//  ziggeo-video=""+token+"" -- use this from the daatabase
 		    		});
@@ -84,23 +91,21 @@
 	    	
 	    })();
 
-
-	    </script>
-
-	    <script>
 	    var token;
+	    var myFirebaseRef = new Firebase("https://torrid-torch-9815.firebaseio.com/");
+		var geoFire = new GeoFire(myFirebaseRef);
 		ZiggeoApi.Events.on("submitted", function (data) {
 			// Triggered when a video has been recorded 
 		window.alert("Recorded Video")
 		 token = data.video.token;
-		console.log("token");
-		});
-		</script>
 
-		<!-- Firebase stuff -->
-		<script>
-				var myFirebaseRef = new Firebase("https://torrid-torch-9815.firebaseio.com/");
-				var geoFire = new GeoFire(myFirebaseRef);
+
+		console.log(token);
+		console.log(lat);
+		console.log(longi);
+
+
+				
 				
 
 				geoFire.set(token, [lat ,longi]).then(function() {
@@ -109,16 +114,26 @@
 				  console.log("Error: " + error);
 				});
 
-				var geoQuery = geoFire.query({
-				  center: [position.coords.latitude,position.coords.longitude ],
+var geoQuery = geoFire.query({
+				  center: [lat, longi ],
 				  radius: 1.609 //kilometers
 				});
 
 				geoQuery.on("key_entered", function(key, location, distance) {
   console.log("Bicycle shop " + key + " found at " + location + " (" + distance + " km away)");
+
+
 });
 
-		</script>
+
+
+
+});
+				
+
+		
+	
+ 		</script>
 	
 		<!-- Demo Analytics -->
 		<script>
